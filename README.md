@@ -36,6 +36,8 @@ backend/              Node.js + Express API and static host
    - **Fix the Reward** — as the poster, change the reward amount anytime.
    - **Fix the Architecture** — as the poster, edit the requirements anytime.
    - **Mark Completed** — as the person who took a gig, close it out.
+   - **Release Payment** — as the poster, release the reward after checking the completed work; the worker sees it under **Rewards**.
+   - **Delete** — as the poster, remove an open gig from **Posted by Me**.
 
 Every action is appended to `backend/data/activity.json`, visible under the
 **Activity** tab on the Gigs page.

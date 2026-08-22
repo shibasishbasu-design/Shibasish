@@ -58,10 +58,22 @@
         },
         "at": "2026-08-22T11:29:08.407Z",
         "note": "Marked the gig as completed."
+      },
+      {
+        "action": "payment_released",
+        "by": {
+          "userId": "U-MT4ALXK0-BTF6MK",
+          "name": "Misha Shrimali",
+          "email": "mishh0607@gmail.com"
+        },
+        "at": "2026-08-22T11:52:35.078Z",
+        "note": "Released ₹100 to demo."
       }
     ],
     "createdAt": "2026-08-22T11:27:44.266Z",
-    "updatedAt": "2026-08-22T11:29:08.407Z",
-    "completedAt": "2026-08-22T11:29:08.407Z"
+    "updatedAt": "2026-08-22T11:52:35.078Z",
+    "completedAt": "2026-08-22T11:29:08.407Z",
+    "paymentReleased": true,
+    "paymentReleasedAt": "2026-08-22T11:52:35.078Z"
   }
 ]

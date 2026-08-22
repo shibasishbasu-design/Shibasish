@@ -57,5 +57,25 @@
     "gigId": null,
     "note": "Signed in with name and email.",
     "at": "2026-08-22T11:29:37.845Z"
+  },
+  {
+    "id": "A-MT4BJNHE-JRWRO4",
+    "type": "release_payment",
+    "userId": "U-MT4ALXK0-BTF6MK",
+    "name": "Misha Shrimali",
+    "email": "mishh0607@gmail.com",
+    "gigId": "GIG-MT4ANP1M-Z6ISCK",
+    "note": "Released ₹100 for \"gig1\"",
+    "at": "2026-08-22T11:52:35.234Z"
+  },
+  {
+    "id": "A-MT4BKD7N-E5GBN2",
+    "type": "identify",
+    "userId": "U-MT4AOPTD-6CXD9N",
+    "name": "demo",
+    "email": "demo@test.com",
+    "gigId": null,
+    "note": "Signed in with name and email.",
+    "at": "2026-08-22T11:53:08.579Z"
   }
 ]

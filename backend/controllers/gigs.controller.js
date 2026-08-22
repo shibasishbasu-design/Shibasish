@@ -68,6 +68,7 @@ const create = asyncHandler(async (req, res) => {
     deadline,
     location,
     status: 'open',
+    paymentReleased: false,
     postedBy: { userId: user.id, name: user.name, email: user.email },
     assignedTo: null,
     applicants: [],
@@ -168,4 +169,52 @@ const complete = asyncHandler(async (req, res) => {
   res.json(gig);
 });
 
-module.exports = { list, getOne, create, take, updateReward, updateArchitecture, complete };
+const releasePayment = asyncHandler(async (req, res) => {
+  const { email } = requireIdentity({ name: req.body.name || 'owner', email: req.body.email });
+
+  const gig = await updateCollection(GIGS_FILE, gigs => {
+    const target = findGigOrThrow(gigs, req.params.id);
+    if (!isOwner(target, email)) throw new HttpError(403, 'Only the gig owner can release the payment.');
+    if (target.status !== 'completed') throw new HttpError(409, 'The gig must be completed before payment is released.');
+    if (target.paymentReleased) throw new HttpError(409, 'Payment has already been released.');
+
+    target.paymentReleased = true;
+    target.paymentReleasedAt = new Date().toISOString();
+    target.updatedAt = target.paymentReleasedAt;
+    target.history.push({ action: 'payment_released', by: target.postedBy, at: target.updatedAt, note: `Released ₹${target.reward} to ${target.assignedTo.name}.` });
+    return target;
+  });
+
+  await logActivity({
+    type: 'release_payment',
+    user: { id: gig.postedBy.userId, name: gig.postedBy.name, email: gig.postedBy.email },
+    gigId: gig.id,
+    note: `Released ₹${gig.reward} for "${gig.title}"`
+  });
+  res.json(gig);
+});
+
+const remove = asyncHandler(async (req, res) => {
+  const { email } = requireIdentity({ name: req.body.name || 'owner', email: req.body.email });
+  let deletedGig;
+
+  await updateCollection(GIGS_FILE, gigs => {
+    const index = gigs.findIndex(g => g.id === req.params.id);
+    if (index === -1) throw new HttpError(404, 'Gig not found.');
+    const target = gigs[index];
+    if (!isOwner(target, email)) throw new HttpError(403, 'Only the gig owner can delete this gig.');
+    if (target.status !== 'open') throw new HttpError(409, 'Only an open gig can be deleted.');
+    deletedGig = gigs.splice(index, 1)[0];
+    return deletedGig;
+  });
+
+  await logActivity({
+    type: 'delete_gig',
+    user: { id: deletedGig.postedBy.userId, name: deletedGig.postedBy.name, email: deletedGig.postedBy.email },
+    gigId: deletedGig.id,
+    note: `Deleted "${deletedGig.title}"`
+  });
+  res.json({ message: 'Gig deleted.', gig: deletedGig });
+});
+
+module.exports = { list, getOne, create, take, updateReward, updateArchitecture, complete, releasePayment, remove };

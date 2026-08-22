@@ -30,6 +30,8 @@
     updateReward: (id, payload) => request(`/gigs/${encodeURIComponent(id)}/reward`, { method: 'PATCH', body: JSON.stringify(payload) }),
     updateArchitecture: (id, payload) => request(`/gigs/${encodeURIComponent(id)}/architecture`, { method: 'PATCH', body: JSON.stringify(payload) }),
     completeGig: (id, payload) => request(`/gigs/${encodeURIComponent(id)}/complete`, { method: 'POST', body: JSON.stringify(payload) }),
+    releasePayment: (id, payload) => request(`/gigs/${encodeURIComponent(id)}/release-payment`, { method: 'POST', body: JSON.stringify(payload) }),
+    deleteGig: (id, payload) => request(`/gigs/${encodeURIComponent(id)}`, { method: 'DELETE', body: JSON.stringify(payload) }),
     getActivity: (filters = {}) => request(`/activity${query(filters)}`)
   };
 })();

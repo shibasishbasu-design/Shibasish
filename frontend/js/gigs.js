@@ -53,18 +53,25 @@
     } else if (activeTab === 'mine') {
       actions = `
         <button class="btn btn-secondary btn-small" data-action="toggle-reward" data-gig-id="${gig.id}">Fix Reward</button>
-        <button class="btn btn-secondary btn-small" data-action="toggle-architecture" data-gig-id="${gig.id}">Fix Architecture</button>`;
+        <button class="btn btn-secondary btn-small" data-action="toggle-architecture" data-gig-id="${gig.id}">Fix Architecture</button>
+        ${gig.status === 'completed' && !gig.paymentReleased ? `<button class="btn btn-primary btn-small" data-action="release-payment" data-gig-id="${gig.id}">Release Payment</button>` : ''}
+        ${gig.status === 'open' ? `<button class="btn btn-ghost btn-small" data-action="delete" data-gig-id="${gig.id}">Delete Gig</button>` : ''}`;
     } else if (activeTab === 'taken') {
       if (gig.status === 'in-progress' && isAssignee) {
         actions = `<button class="btn btn-primary btn-small" data-action="complete" data-gig-id="${gig.id}">Mark Completed</button>`;
       } else {
         actions = `<span class="chip">${STATUS_LABEL[gig.status]}</span>`;
       }
+    } else if (activeTab === 'rewards') {
+      actions = gig.paymentReleased
+        ? `<span class="chip reward-released">Reward released</span>`
+        : `<span class="chip reward-pending">Awaiting owner release</span>`;
     }
 
     const ownerLine = activeTab !== 'mine' ? `<div class="meta"><span>Posted by ${esc(gig.postedBy.name)}</span><span>${fmtDate(gig.deadline)}</span></div>` : `<div class="meta"><span>${gig.applicants.length} applicant${gig.applicants.length === 1 ? '' : 's'}</span><span>${fmtDate(gig.deadline)}</span></div>`;
 
     const assignedLine = gig.assignedTo ? `<p class="desc">Assigned to <strong>${esc(gig.assignedTo.name)}</strong></p>` : '';
+    const paymentLine = gig.status === 'completed' && gig.assignedTo ? `<div class="payment-status ${gig.paymentReleased ? 'released' : 'pending'}">${gig.paymentReleased ? `₹${gig.reward} released on ${fmtDate(gig.paymentReleasedAt)}` : 'Payment is waiting for the gig owner.'}</div>` : '';
 
     return `
       <article class="glass-card gig-card" data-card-id="${gig.id}">
@@ -77,6 +84,7 @@
         <div class="chip-row">${skillsHtml}<span class="chip">${esc(gig.category)}</span></div>
         ${ownerLine}
         ${assignedLine}
+        ${paymentLine}
         <details class="architecture">
           <summary>Architecture / requirements</summary>
           <p>${esc(gig.architecture)}</p>
@@ -134,6 +142,12 @@
     grid.innerHTML = gigs.length ? gigs.map(renderGigCard).join('') : renderEmptyMessage('You haven\'t taken a gig yet. Switch to Open Gigs to find one.');
   }
 
+  async function loadRewardsTab() {
+    skeleton();
+    const gigs = await api.getGigs({ assignedTo: user.email, status: 'completed' });
+    grid.innerHTML = gigs.length ? gigs.map(renderGigCard).join('') : renderEmptyMessage('Your completed gig rewards will appear here.');
+  }
+
   async function loadActivityTab() {
     activityList.innerHTML = '<div class="skeleton-line" style="width:50%"></div>';
     const entries = await api.getActivity({ email: user.email, limit: 30 });
@@ -160,6 +174,7 @@
       if (activeTab === 'open') await loadOpenTab();
       else if (activeTab === 'mine') await loadMineTab();
       else if (activeTab === 'taken') await loadTakenTab();
+      else if (activeTab === 'rewards') await loadRewardsTab();
     } catch (err) {
       renderEmpty(session.escapeHtml(err.message));
     }
@@ -202,6 +217,18 @@
         button.textContent = 'Marking...';
         await api.completeGig(gigId, { name: user.name, email: user.email });
         session.showToast('Marked as completed.');
+        await loadActiveTab();
+      } else if (action === 'release-payment') {
+        button.disabled = true;
+        button.textContent = 'Releasing...';
+        await api.releasePayment(gigId, { name: user.name, email: user.email });
+        session.showToast('Payment released to the gig worker.');
+        await loadActiveTab();
+      } else if (action === 'delete') {
+        if (!window.confirm('Delete this open gig? This cannot be undone.')) return;
+        button.disabled = true;
+        await api.deleteGig(gigId, { name: user.name, email: user.email });
+        session.showToast('Gig deleted.');
         await loadActiveTab();
       } else if (action === 'save-reward') {
         const input = grid.querySelector(`[data-inline="reward"][data-gig-id="${gigId}"] input`);
