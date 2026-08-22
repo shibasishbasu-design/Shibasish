@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Post a gig on Campus GIG">
+  <title>Post a Gig | Campus GIG</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script>window.CAMPUSGIG_CONFIG = { apiBase: '/api' };</script>
+</head>
+
+<body data-page="post" data-depth="nested">
+  <header class="navbar">
+    <a class="brand" href="../index.html"><span class="brand-mark">CG</span><span>Campus GIG</span></a>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="gigs.html">Gigs</a>
+      <a class="active" href="post.html">Post a Gig</a>
+    </nav>
+    <div data-identity-badge></div>
+  </header>
+
+  <main class="container section">
+    <div class="section-heading">
+      <span class="eyebrow">POST A GIG</span>
+      <h2>Describe the work. Set the reward.</h2>
+    </div>
+
+    <div class="create-layout">
+      <form class="glass-card form-panel" id="post-form">
+        <div id="form-notice"></div>
+        <div class="form-grid">
+          <label class="field full">Title
+            <input type="text" id="f-title" maxlength="140" placeholder="Design a poster for the coding club meetup" required>
+          </label>
+          <label class="field">Category
+            <input type="text" id="f-category" maxlength="60" placeholder="Design, Photography, Tutoring..." required>
+          </label>
+          <label class="field">Reward (₹)
+            <input type="number" id="f-reward" min="1" step="1" placeholder="500" required>
+          </label>
+          <label class="field">Deadline
+            <input type="date" id="f-deadline" required>
+          </label>
+          <label class="field">Location
+            <input type="text" id="f-location" maxlength="140" placeholder="On campus / Remote">
+          </label>
+          <label class="field full">Skills (comma separated)
+            <input type="text" id="f-skills" placeholder="Canva, Branding, Communication">
+          </label>
+          <label class="field full">Description
+            <textarea id="f-description" maxlength="2000" placeholder="What needs to get done?" required></textarea>
+          </label>
+          <label class="field full">Architecture / requirements
+            <textarea id="f-architecture" maxlength="3000" placeholder="How should it be built? File formats, tools, deliverables, constraints..." required></textarea>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="post-submit">Post this Gig</button>
+      </form>
+
+      <aside class="glass-card preview-panel">
+        <span class="eyebrow">PREVIEW</span>
+        <h2 id="preview-title">Your gig title</h2>
+        <div class="preview-meta"><span>Reward</span><strong id="preview-reward">₹0</strong></div>
+        <div class="preview-meta"><span>Deadline</span><strong id="preview-deadline">—</strong></div>
+        <div class="preview-meta"><span>Posted by</span><strong id="preview-poster">You</strong></div>
+        <p id="preview-description">Fill in the form to see a live preview.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer"><p>Built by students. Powered by students.</p></footer>
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/session.js"></script>
+  <script src="../js/post.js"></script>
+</body>
+
+</html>

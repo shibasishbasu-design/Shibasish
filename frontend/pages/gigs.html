@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Browse, take, and manage Campus GIG gigs">
+  <title>Gigs | Campus GIG</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script>window.CAMPUSGIG_CONFIG = { apiBase: '/api' };</script>
+</head>
+
+<body data-page="gigs" data-depth="nested">
+  <header class="navbar">
+    <a class="brand" href="../index.html"><span class="brand-mark">CG</span><span>Campus GIG</span></a>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a class="active" href="gigs.html">Gigs</a>
+      <a href="post.html">Post a Gig</a>
+    </nav>
+    <div data-identity-badge></div>
+  </header>
+
+  <main class="container section">
+    <div class="section-heading">
+      <span class="eyebrow">CAMPUS GIG BOARD</span>
+      <h2>Find it, take it, ship it.</h2>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="open">Open Gigs</button>
+      <button class="tab" data-tab="mine">Posted by Me</button>
+      <button class="tab" data-tab="taken">My Taken Gigs</button>
+      <button class="tab" data-tab="activity">Activity</button>
+    </div>
+
+    <div class="filter-bar" id="open-filters">
+      <input type="search" id="search-input" placeholder="Search title, description, or skill...">
+      <select id="category-filter">
+        <option value="">All categories</option>
+      </select>
+    </div>
+
+    <div class="gig-grid" id="gig-grid"></div>
+    <div class="activity-list hidden" id="activity-list"></div>
+  </main>
+
+  <footer class="footer"><p>Built by students. Powered by students.</p></footer>
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/session.js"></script>
+  <script src="../js/gigs.js"></script>
+</body>
+
+</html>

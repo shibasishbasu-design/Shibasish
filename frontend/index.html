@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Campus GIG - post a campus gig or pick one up in minutes">
+  <title>Campus GIG | Post it or work it.</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>window.CAMPUSGIG_CONFIG = { apiBase: '/api' };</script>
+</head>
+
+<body data-page="home">
+  <header class="navbar">
+    <a class="brand" href="index.html"><span class="brand-mark">CG</span><span>Campus GIG</span></a>
+    <div data-identity-badge></div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <span class="eyebrow">CAMPUS GIG MARKETPLACE</span>
+      <h1>Post a gig. <span class="gradient-text">Or go work one.</span></h1>
+      <p class="lede">Give your name and email once — everything you post, take, and get paid for is tracked to that identity.</p>
+
+      <div class="choice-grid">
+        <article class="glass-card choice-card" data-choice="post" tabindex="0" role="button">
+          <div class="choice-icon push">📤</div>
+          <h3>Post a Gig</h3>
+          <p>Have work that needs doing? Describe it, set a reward, and let campus talent take it on.</p>
+          <ul>
+            <li>Set the reward and deadline</li>
+            <li>Define the architecture / requirements</li>
+            <li>Edit the reward or spec anytime</li>
+          </ul>
+        </article>
+        <article class="glass-card choice-card" data-choice="gigs" tabindex="0" role="button">
+          <div class="choice-icon work">🛠️</div>
+          <h3>Work on a Gig</h3>
+          <p>Browse open gigs, take one that fits your skills, and mark it complete once it's done.</p>
+          <ul>
+            <li>Filter by category or keyword</li>
+            <li>Take a gig with one click</li>
+            <li>Track what you've taken on</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><p>Built by students. Powered by students.</p></footer>
+
+  <!-- Identity modal: shown before entering either flow -->
+  <div class="modal-overlay" id="identity-modal">
+    <div class="glass-card modal-card">
+      <button type="button" class="modal-close" id="identity-close" aria-label="Close">&times;</button>
+      <h2 id="identity-title">Who's this?</h2>
+      <p>Your name and email identify your session — no password needed.</p>
+      <form id="identity-form">
+        <label class="field">Name
+          <input type="text" id="identity-name" name="name" placeholder="Ananya Rao" autocomplete="name" required>
+        </label>
+        <label class="field">Email
+          <input type="email" id="identity-email" name="email" placeholder="you@campus.edu" autocomplete="email" required>
+        </label>
+        <div class="field-error" id="identity-error"></div>
+        <button type="submit" class="btn btn-primary btn-block" id="identity-submit">Continue</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/session.js"></script>
+  <script src="js/home.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "GIG-MT4ANP1M-Z6ISCK",
+    "title": "gig1",
+    "description": "poster",
+    "category": "design",
+    "skills": [
+      "canva"
+    ],
+    "architecture": "give me png file",
+    "reward": 100,
+    "deadline": "2026-08-23",
+    "location": "remote",
+    "status": "completed",
+    "postedBy": {
+      "userId": "U-MT4ALXK0-BTF6MK",
+      "name": "Misha Shrimali",
+      "email": "mishh0607@gmail.com"
+    },
+    "assignedTo": {
+      "userId": "U-MT4AOPTD-6CXD9N",
+      "name": "demo",
+      "email": "demo@test.com"
+    },
+    "applicants": [
+      {
+        "userId": "U-MT4AOPTD-6CXD9N",
+        "name": "demo",
+        "email": "demo@test.com",
+        "appliedAt": "2026-08-22T11:28:39.946Z"
+      }
+    ],
+    "history": [
+      {
+        "action": "posted",
+        "by": {
+          "name": "Misha Shrimali",
+          "email": "mishh0607@gmail.com"
+        },
+        "at": "2026-08-22T11:27:44.266Z",
+        "note": "Posted for ₹100"
+      },
+      {
+        "action": "taken",
+        "by": {
+          "name": "demo",
+          "email": "demo@test.com"
+        },
+        "at": "2026-08-22T11:28:39.946Z",
+        "note": "Took the gig."
+      },
+      {
+        "action": "completed",
+        "by": {
+          "userId": "U-MT4AOPTD-6CXD9N",
+          "name": "demo",
+          "email": "demo@test.com"
+        },
+        "at": "2026-08-22T11:29:08.407Z",
+        "note": "Marked the gig as completed."
+      }
+    ],
+    "createdAt": "2026-08-22T11:27:44.266Z",
+    "updatedAt": "2026-08-22T11:29:08.407Z",
+    "completedAt": "2026-08-22T11:29:08.407Z"
+  }
+]
